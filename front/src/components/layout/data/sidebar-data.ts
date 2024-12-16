@@ -1,4 +1,4 @@
-import { IconLayoutDashboard, IconUsers, IconBook } from '@tabler/icons-react'
+import { IconCalendar, IconUsers, IconBook } from '@tabler/icons-react'
 import { Command } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -17,13 +17,8 @@ export const sidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: 'General',
+      title: 'Geral',
       items: [
-        {
-          title: 'Dashboard',
-          url: '/',
-          icon: IconLayoutDashboard,
-        },
         {
           title: 'Estudantes',
           url: '/students',
@@ -33,6 +28,16 @@ export const sidebarData: SidebarData = {
           title: 'Livros',
           url: '/books',
           icon: IconBook,
+        },
+      ],
+    },
+    {
+      title: 'Emprestimos',
+      items: [
+        {
+          title: 'Realizar emprestimo',
+          url: '/loans',
+          icon: IconCalendar,
         },
       ],
     },

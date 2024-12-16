@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedStudentsIndexImport } from './routes/_authenticated/students/index'
+import { Route as AuthenticatedLoansIndexImport } from './routes/_authenticated/loans/index'
 import { Route as AuthenticatedBooksIndexImport } from './routes/_authenticated/books/index'
 
 // Create/Update Routes
@@ -36,6 +37,12 @@ const AuthenticatedStudentsIndexRoute = AuthenticatedStudentsIndexImport.update(
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any,
 )
+
+const AuthenticatedLoansIndexRoute = AuthenticatedLoansIndexImport.update({
+  id: '/loans/',
+  path: '/loans/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 const AuthenticatedBooksIndexRoute = AuthenticatedBooksIndexImport.update({
   id: '/books/',
@@ -68,6 +75,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBooksIndexImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/loans/': {
+      id: '/_authenticated/loans/'
+      path: '/loans'
+      fullPath: '/loans'
+      preLoaderRoute: typeof AuthenticatedLoansIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/students/': {
       id: '/_authenticated/students/'
       path: '/students'
@@ -83,12 +97,14 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedBooksIndexRoute: typeof AuthenticatedBooksIndexRoute
+  AuthenticatedLoansIndexRoute: typeof AuthenticatedLoansIndexRoute
   AuthenticatedStudentsIndexRoute: typeof AuthenticatedStudentsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedBooksIndexRoute: AuthenticatedBooksIndexRoute,
+  AuthenticatedLoansIndexRoute: AuthenticatedLoansIndexRoute,
   AuthenticatedStudentsIndexRoute: AuthenticatedStudentsIndexRoute,
 }
 
@@ -99,12 +115,14 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteRouteWithChildren
   '/': typeof AuthenticatedIndexRoute
   '/books': typeof AuthenticatedBooksIndexRoute
+  '/loans': typeof AuthenticatedLoansIndexRoute
   '/students': typeof AuthenticatedStudentsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/books': typeof AuthenticatedBooksIndexRoute
+  '/loans': typeof AuthenticatedLoansIndexRoute
   '/students': typeof AuthenticatedStudentsIndexRoute
 }
 
@@ -113,19 +131,21 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/books/': typeof AuthenticatedBooksIndexRoute
+  '/_authenticated/loans/': typeof AuthenticatedLoansIndexRoute
   '/_authenticated/students/': typeof AuthenticatedStudentsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/books' | '/students'
+  fullPaths: '' | '/' | '/books' | '/loans' | '/students'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/books' | '/students'
+  to: '/' | '/books' | '/loans' | '/students'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/'
     | '/_authenticated/books/'
+    | '/_authenticated/loans/'
     | '/_authenticated/students/'
   fileRoutesById: FileRoutesById
 }
@@ -156,6 +176,7 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/",
         "/_authenticated/books/",
+        "/_authenticated/loans/",
         "/_authenticated/students/"
       ]
     },
@@ -165,6 +186,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/books/": {
       "filePath": "_authenticated/books/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/loans/": {
+      "filePath": "_authenticated/loans/index.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/students/": {

@@ -2,13 +2,11 @@ package com.henriquegc.engsoftware.models;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,12 +27,9 @@ public class Loan {
     @ManyToOne(optional = false)
     private Student student;
 
-    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemLoan> items;
-
     private double finePerDay;
 
-    public double calculateTotalFine() {
+    public double calculateTotalFine(List<ItemLoan> items) {
         double multaTotal = 0;
         for (ItemLoan item : items) {
             multaTotal += item.calculateDayOfDelay() * finePerDay;
@@ -42,7 +37,7 @@ public class Loan {
         return multaTotal;
     }
 
-    public long calculateTotalDelayDay() {
+    public long calculateTotalDelayDay(List<ItemLoan> items) {
         return items.stream().mapToLong(ItemLoan::calculateDayOfDelay).sum();
     }
 }
