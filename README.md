@@ -58,7 +58,9 @@ O fluxo de empréstimo segue os seguintes passos:
 ![Diagrama de classes do empréstimo de livro](emprestarlivro.png)
 
 - **Diagrama de Sequência**  
-![Diagrama de sequência do empréstimo de livro](emprestimolivrosequencia.png)
+
+![Diagrama de sequência do empréstimo de livro](emprestarlivrosequencia.png)
+
 
 ---
 
